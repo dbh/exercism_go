@@ -61,6 +61,45 @@ func TestBirdsInWeek(t *testing.T) {
 			week:       1,
 			want:       12,
 		},
+		{
+			name: "Calculates last of multiple weeks",
+			birdCounts: []int{
+				4, 7, 3, 2, 1, 1, 2,
+				0, 2, 3, 2, 7, 1, 3,
+				42, 42, 42, 42, 42, 42, 42,
+				0, 6, 5, 3, 7, 2, 3},
+			week: 4,
+			want: 26,
+		},
+		{
+			name:       "Error handling where there are no bird counts",
+			birdCounts: []int{},
+			week:       1,
+			want:       0,
+		},
+		{
+			name: "Error handling where no bird count data exists for requested week",
+			birdCounts: []int{
+				1, 2, 3, 5, 8, 13, 21},
+			week: 2,
+			want: 0,
+		},
+		{
+			name: "Error handling count a partial first week",
+			birdCounts: []int{
+				1, 2, 3},
+			week: 1,
+			want: 6,
+		},
+		{
+			name: "Error handling count a partial last week",
+			birdCounts: []int{
+				1, 2, 3, 4, 5, 6, 7,
+				10, 20,
+			},
+			week: 2,
+			want: 30,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
